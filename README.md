@@ -1,15 +1,15 @@
-## 🚀 Live Demo & Deployment
+---
 
-| Feature | Links |
-| :--- | :--- |
-| **Live Web App** | [Visit Platform](https://ai-video-conferencing-platform-with-real-time-transcrip.pages.dev) |
-| **Frontend Status** | ![Cloudflare Pages](https://img.shields.io/badge/Deployed%20to-Cloudflare%20Pages-orange?logo=cloudflare) |
-| **CI/CD Pipeline** | ![GitHub Actions](https://img.shields.io/badge/Build-GitHub%20Actions-blue?logo=githubactions) |
+## 🚀 Live Demo & Build Status
+
+* **🌐 Production Link:** [Launch Live Application 🔗](https://ai-video-conferencing-platform-with-real-time-transcrip.pages.dev)
+* **⚡ Frontend Status:** ![Cloudflare Pages](https://img.shields.io/badge/Status-Live%20on%20Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
+* **⚙️ CI/CD Pipeline:** ![GitHub Actions](https://img.shields.io/badge/Pipeline-GitHub%20Actions-2088FF?style=for-the-badge&logo=GitHub%20Actions&logoColor=white)
 
 ---
 
-## 🛠️ Tech Stack & Key Features
+## 🛠️ Architecture & Core Features
 
-* **Real-Time Communication:** WebRTC with optimized mesh/SFU topology for seamless video/audio conferencing.
-* **Smart AI Layer:** Real-time NLP transcription, automated meeting summarization, face & voice emotion analytics, and action-item task extraction.
-* **Integrations:** Smooth automated calendar syncing and smart developer workflow management.
+* **🎥 Next-Gen Media Engine:** Powered by WebRTC with high-performance mesh architecture ensuring ultra-low latency audio/video streams.
+* **🧠 Intelligent AI Middleware:** Features real-time NLP speech-to-text transcription, automated multi-turn meeting summarization, multi-modal (face + voice) emotion analytics, and smart action-item extraction.
+* **📅 Productivity Ecosystem:** Seamless automated calendar synchronization coupled with interactive task workflows.
