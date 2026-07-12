@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
         return <div>Loading...</div>; // Or a spinner component
     }
 
-    return userData ? <Outlet /> : <Navigate to="/auth" replace />;
+    return <Outlet />;
 };
 
 export default ProtectedRoute;
