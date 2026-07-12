@@ -15,18 +15,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install dependencies and build the project if a package.json file exists
-      - name: Install dependencies (If React/Vite)
+      # Navigate into the frontend folder, install dependencies, and build the Vite project
+      - name: Install and Build Frontend
         run: |
-          if [ -f package.json ]; then
-            npm install
-            npm run build --if-present
-          fi
+          cd frontend
+          npm install
+          npm run build
 
-      # Deploy the build or static files directly to Cloudflare Pages
+      # Deploy the generated dist folder inside frontend to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=ai-video-conferencing-platform
+          # Pointing to frontend/dist where Vite generates the production build
+          command: pages deploy frontend/dist --project-name=ai-video-conferencing-platform-with-real-time-transcrip
