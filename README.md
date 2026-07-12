@@ -2,9 +2,9 @@
 
 ## 🚀 Live Demo & Build Status
 
-* **🌐 Production Link:** [Launch Live Application 🔗](https://ai-video-conferencing-platform-with-real-time-transcrip.pages.dev)
-* **⚡ Frontend Status:** ![Cloudflare Pages](https://img.shields.io/badge/Status-Live%20on%20Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
-* **⚙️ CI/CD Pipeline:** ![GitHub Actions](https://img.shields.io/badge/Pipeline-GitHub%20Actions-2088FF?style=for-the-badge&logo=GitHub%20Actions&logoColor=white)
+* **🌐 Production Link:** https://ai-video-conferencing-platform-with-real-time-transcrip.pages.dev
+* **⚡ Frontend Status:** Deployed & Live on Cloudflare Pages
+* **⚙️ CI/CD Pipeline:** Active via GitHub Actions
 
 ---
 
