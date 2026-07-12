@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, useContext } from "react";
 import {
   Avatar,
@@ -17,6 +18,7 @@ import { motion } from "framer-motion";
 
 const Authentication = () => {
   const { handleLogin, handleRegister } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [tab, setTab] = useState(0);
   const [username, setUsername] = useState("");
@@ -31,9 +33,10 @@ const Authentication = () => {
     setError("");
     setLoading(true);
     try {
-      if (tab === 0) {
-        await handleLogin(username, password);
-      } else {
+    if (tab === 0) {
+    await handleLogin(username, password);
+    navigate("/dashboard"); 
+    } else {
         const res = await handleRegister(name, username, password);
         setMessage(res);
         setOpen(true);
