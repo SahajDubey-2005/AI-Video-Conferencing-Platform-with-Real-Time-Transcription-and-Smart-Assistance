@@ -35,7 +35,7 @@ const Authentication = () => {
     try {
     if (tab === 0) {
     await handleLogin(username, password);
-    navigate("/dashboard"); 
+    navigate("/home");
     } else {
         const res = await handleRegister(name, username, password);
         setMessage(res);
