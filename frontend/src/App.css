@@ -1,63 +1,934 @@
-.landingPageContainer {
-  width: 100vw;
-  height: 100vh;
-  background: url("/background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* IMMERSIVE SPATIAL LANDING */
+
+.visionLanding {
+  width: 100%;
+  min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(24, 19, 13, 0.35),
+      rgba(24, 19, 13, 0.05) 50%,
+      rgba(24, 19, 13, 0.45)
+    ),
+    url("/spatial-room.jpg") center / cover no-repeat;
+
+  background-color: #756650;
 }
 
-.landingPageContainer nav {
-  padding-inline: 1.2rem;
-  padding-block: 1.6rem;
+.visionLanding * {
+  box-sizing: border-box;
+}
+
+.visionLanding button,
+.visionLanding a {
+  font-family: inherit;
+}
+
+/* FLOATING NAVBAR */
+
+.visionNav {
+  width: 92%;
+  max-width: 1400px;
+  margin: 22px auto 0;
+  padding: 14px 24px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(30px) saturate(140%);
+  border-radius: 50px;
+
+  box-shadow: 0 10px 35px #00000015;
 }
 
-.landingPageContainer nav h2 {
-  font-size: 1.8rem;
-  font-weight: 500;
+.visionNav h2 {
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 0;
 }
 
-.landingPageContainer nav .navlist {
+.visionNavLinks {
   display: flex;
-  gap: 1.6rem;
+  align-items: center;
+  gap: 25px;
+}
+
+.visionNavLinks button {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
   cursor: pointer;
-
 }
 
-.landingMainContainer {
+.visionNavLinks a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 23px;
+  background: #ffffff25;
+  border: 1px solid #ffffff35;
+  border-radius: 50px;
+  font-size: 13px;
+}
+
+/* HERO */
+
+.visionMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 20px;
+}
+
+.visionHeading {
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 3px 20px #00000030;
+}
+
+.visionHeading > span {
+  font-size: 10px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  color: #ffffffc9;
+}
+
+.visionHeading h1 {
+  margin: 12px 0;
+  font-size: clamp(32px, 4.5vw, 65px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.1;
+}
+
+.visionHeading p {
+  font-size: 15px;
+  margin: 0;
+  color: #ffffffe0;
+}
+
+/* FLOATING WORKSPACE */
+
+.visionWorkspace {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  perspective: 1500px;
+  animation: visionAppear 1.2s ease both;
+}
+
+/* FLOATING BROWSER BAR */
+
+.visionBrowser {
+  width: 80%;
+  margin: 0 auto 10px;
+  padding: 8px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  border-radius: 50px;
+  background: rgba(100, 90, 72, 0.35);
+  backdrop-filter: blur(35px) saturate(130%);
+  border: 1px solid #ffffff35;
+  box-shadow: 0 8px 20px #00000015;
+
+  font-size: 12px;
+  color: #ffffffe0;
+}
+
+.visionBrowser > div {
+  flex: 1;
+  text-align: center;
+  background: #00000020;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 10px;
+}
+
+/* MAIN GLASS WINDOW */
+
+.visionWindow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 14px;
+  padding: 16px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(221, 207, 175, 0.38),
+    rgba(75, 61, 43, 0.45)
+  );
+
+  backdrop-filter: blur(35px) saturate(140%);
+  -webkit-backdrop-filter: blur(35px) saturate(140%);
+
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 24px;
+
+  box-shadow:
+    0 40px 100px #00000035,
+    inset 0 1px 0 #ffffff35;
+
+  transition: transform 0.5s ease;
+}
+
+.visionMeeting {
+  min-width: 0;
+}
+
+.visionMeetingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #ffffffe0;
+  margin-bottom: 14px;
+}
+
+/* PARTICIPANT GRID */
+
+.visionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.visionParticipant {
+  position: relative;
+  aspect-ratio: 1.2;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #b8a88f;
+}
+
+.visionParticipant img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.visionParticipant:hover img {
+  transform: scale(1.06);
+}
+
+.visionParticipant::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 55%,
+    rgba(0,0,0,0.45)
+  );
+  pointer-events: none;
+}
+
+.visionParticipant > span {
+  position: absolute;
+  bottom: 8px;
+  left: 9px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* CHAT SIDEBAR */
+
+.visionChat {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: rgba(70, 55, 35, 0.12);
+  border-radius: 16px;
+  min-width: 0;
+}
+
+.visionChatHeader {
   display: flex;
   justify-content: space-between;
-  padding-inline: 3rem;
-  height: 80vh;
   align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-.landingMainContainer>div:nth-child(1) {
-  font-size: 2.2rem;
+.visionChatHeader span {
+  background: #ffffff25;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
 }
 
-.landingMainContainer>div:nth-child(1) div[role='button'] {
-  background: #D97500;
-  width: fit-content;
-  padding: 1rem;
-  border-radius: 20px;
-  margin-top: 1.9rem;
+.visionMessage {
+  margin-bottom: 13px;
 }
 
-.landingMainContainer>div:nth-child(1) div[role='button'] a {
-  text-decoration: none;
+.visionMessage small {
+  display: block;
+  color: #ffffffa0;
+  font-size: 9px;
+  margin-bottom: 4px;
+}
+
+.visionMessage p {
+  display: inline-block;
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 10px;
+  background: #ffffff20;
+  border: 1px solid #ffffff10;
+  border-radius: 4px 10px 10px 10px;
+}
+
+.ownMessage {
+  text-align: right;
+}
+
+.ownMessage p {
+  background: #ffffff35;
+}
+
+.visionChatInput {
+  margin-top: auto;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 50px;
+  background: #ffffff20;
+  color: #ffffffb0;
+  font-size: 9px;
+}
+
+.visionChatInput span {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background: #4268d6;
   color: white;
-  font-size: 1.7rem;
+  border-radius: 50%;
 }
 
-.landingMainContainer>div:nth-child(2) img {
-  height: 70vh;
-  width: auto;
+/* FLOATING CALL CONTROLS */
+
+.visionControls {
+  width: fit-content;
+  margin: -10px auto 0;
+  position: relative;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+
+  background: rgba(220, 210, 190, 0.35);
+  backdrop-filter: blur(30px);
+  border: 1px solid #ffffff40;
+  border-radius: 50px;
+
+  box-shadow: 0 15px 35px #00000020;
 }
+
+.visionControls > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff25;
+  color: #fff;
+  font-size: 17px;
+  border: 1px solid #ffffff20;
+}
+
+.visionControls .visionEndCall {
+  background: #e62f35;
+  border: none;
+  transform: rotate(135deg);
+}
+
+/* ACTION BUTTONS */
+
+.visionActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.visionPrimary,
+.visionSecondary {
+  padding: 14px 27px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.visionPrimary {
+  background: #f5efe4;
+  color: #42382d;
+  border: 1px solid #ffffff80;
+  box-shadow: 0 10px 30px #00000020;
+}
+
+.visionSecondary {
+  color: white;
+  background: #ffffff15;
+  backdrop-filter: blur(25px);
+  border: 1px solid #ffffff50;
+}
+
+.visionPrimary:hover,
+.visionSecondary:hover {
+  transform: translateY(-4px);
+}
+
+/* FOOTER */
+
+.visionFooter {
+  width: 90%;
+  margin: 0 auto;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  color: #ffffffb0;
+  font-size: 11px;
+  border-top: 1px solid #ffffff20;
+}
+
+/* ENTRANCE ANIMATION */
+
+@keyframes visionAppear {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .visionWindow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .visionChat {
+    display: none;
+  }
+
+  .visionNav {
+    border-radius: 22px;
+    flex-direction: column;
+    gap: 15px;
+    padding: 16px;
+  }
+
+  .visionNavLinks {
+    gap: 15px;
+  }
+
+  .visionMain {
+    padding: 35px 15px;
+  }
+
+  .visionBrowser {
+    width: 95%;
+  }
+
+  .visionHeading > span {
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+
+  .visionGrid {
+    gap: 7px;
+  }
+
+  .visionParticipant {
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .visionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .visionControls {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .visionControls > span {
+    width: 29px;
+    height: 29px;
+    font-size: 14px;
+  }
+
+  .visionNavLinks button,
+  .visionNavLinks a {
+    font-size: 11px;
+  }
+
+  .visionFooter {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visionLanding * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* =========================================
+   PREMIUM SPATIAL GLASS REFINEMENTS
+========================================= */
+
+.visionLanding {
+  min-height: 100dvh;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20, 15, 10, 0.28),
+      rgba(20, 15, 10, 0.06) 45%,
+      rgba(20, 15, 10, 0.35)
+    ),
+    url("/spatial-room.jpg") center / cover no-repeat;
+
+  background-attachment: fixed;
+}
+
+/* Compact floating navbar */
+
+.visionNav {
+  width: 92%;
+  max-width: 1400px;
+  margin: 18px auto 0;
+  padding: 10px 22px;
+
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(35px) saturate(150%);
+  -webkit-backdrop-filter: blur(35px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.visionNav h2 {
+  font-size: 21px;
+  letter-spacing: -1px;
+}
+
+.visionNavLinks button {
+  transition: opacity 0.3s ease;
+}
+
+.visionNavLinks button:hover {
+  opacity: 0.65;
+}
+
+.visionNavLinks a {
+  padding: 9px 24px;
+  transition: all 0.3s ease;
+}
+
+.visionNavLinks a:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Refined typography */
+
+.visionMain {
+  padding: 24px 20px;
+}
+
+.visionHeading {
+  margin-bottom: 22px;
+  animation: visionTextReveal 1s ease both;
+}
+
+.visionHeading > span {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.visionHeading h1 {
+  font-size: clamp(32px, 4.2vw, 60px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  margin: 10px 0;
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.25);
+}
+
+.visionHeading p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Floating meeting workspace */
+
+.visionWorkspace {
+  max-width: 720px;
+  position: relative;
+  animation: visionTextReveal 1.2s ease both;
+}
+
+.visionBrowser {
+  width: 76%;
+  padding: 7px 12px;
+  margin-bottom: 10px;
+
+  background: rgba(70, 60, 45, 0.25);
+  backdrop-filter: blur(30px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Premium glass window */
+
+.visionWindow {
+  grid-template-columns: minmax(0, 1fr) 180px;
+  padding: 14px;
+  gap: 12px;
+  position: relative;
+
+  background: linear-gradient(
+    135deg,
+    rgba(230, 220, 195, 0.26),
+    rgba(90, 75, 55, 0.32)
+  );
+
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 25px;
+
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.25),
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Subtle glass reflection */
+
+.visionWindow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.13),
+    transparent 35%,
+    transparent 75%,
+    rgba(255, 255, 255, 0.04)
+  );
+
+  pointer-events: none;
+}
+
+/* Participant cards */
+
+.visionGrid {
+  gap: 8px;
+}
+
+.visionParticipant {
+  aspect-ratio: 1.45;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.35s ease;
+}
+
+.visionParticipant img {
+  object-position: center 35%;
+  filter: saturate(0.85) contrast(0.97);
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.visionParticipant:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.visionParticipant:hover img {
+  transform: scale(1.06);
+  filter: saturate(1);
+}
+
+.visionParticipant > span {
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Improved chat panel */
+
+.visionChat {
+  background: rgba(35, 25, 15, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px;
+}
+
+.visionChatHeader {
+  font-size: 11px;
+  margin-bottom: 14px;
+}
+
+.visionMessage {
+  margin-bottom: 10px;
+}
+
+.visionMessage small {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.visionMessage p {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 7px 9px;
+  line-height: 1.5;
+}
+
+.visionChatInput {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Floating control dock */
+
+.visionControls {
+  margin: -8px auto 0;
+  padding: 7px 12px;
+  gap: 8px;
+
+  background: rgba(190, 175, 150, 0.35);
+  backdrop-filter: blur(35px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.visionControls > span {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: all 0.25s ease;
+}
+
+.visionControls > span:not(.visionEndCall):hover {
+  transform: translateY(-3px) scale(1.1);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.visionControls .visionEndCall {
+  background: #e5484d;
+  box-shadow: 0 4px 15px rgba(229, 72, 77, 0.3);
+}
+
+/* Vision OS inspired home indicator */
+
+.visionWorkspace::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  margin: 15px auto 0;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Elegant CTA buttons */
+
+.visionActions {
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.visionPrimary {
+  padding: 13px 28px;
+  background: rgba(255, 250, 240, 0.95);
+  color: #3e3428;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.visionSecondary {
+  padding: 13px 28px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.visionPrimary:hover {
+  background: white;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.visionSecondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Subtle floating effect */
+
+@media (min-width: 769px) {
+  .visionWindow {
+    animation: visionHover 8s ease-in-out infinite;
+  }
+}
+
+@keyframes visionHover {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes visionTextReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Compact layout for laptop screens */
+
+@media (min-width: 769px) and (max-height: 850px) {
+  .visionMain {
+    padding: 16px 20px;
+  }
+
+  .visionHeading {
+    margin-bottom: 16px;
+  }
+
+  .visionHeading h1 {
+    font-size: clamp(32px, 4vw, 48px);
+  }
+
+  .visionWorkspace {
+    max-width: 640px;
+  }
+
+  .visionParticipant {
+    aspect-ratio: 1.65;
+  }
+
+  .visionActions {
+    margin-top: 14px;
+  }
+
+  .visionFooter {
+    padding: 10px 0;
+  }
+}
+
+/* Mobile refinements */
+
+@media (max-width: 768px) {
+  .visionLanding {
+    background-attachment: scroll;
+  }
+
+  .visionWindow {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 10px;
+  }
+
+  .visionChat {
+    display: none;
+  }
+
+  .visionHeading h1 {
+    font-size: clamp(30px, 7vw, 45px);
+  }
+
+  .visionBrowser {
+    width: 95%;
+  }
+
+  .visionMain {
+    padding: 30px 15px;
+  }
+
+  .visionParticipant {
+    aspect-ratio: 1.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visionLanding *,
+  .visionLanding *::before,
+  .visionLanding *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
 
 .navBar {
   display: flex;
@@ -93,4 +964,614 @@
   width: 30vw;
   height: auto;
   border-radius: 20px;
+}
+/* =========================================
+   SPATIAL GLASS AUTHENTICATION
+========================================= */
+
+.spatialAuth {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20, 15, 10, 0.28),
+      rgba(20, 15, 10, 0.06) 45%,
+      rgba(20, 15, 10, 0.35)
+    ),
+    url("/spatial-room.jpg") center / cover no-repeat;
+
+  background-color: #756650;
+  background-attachment: fixed;
+}
+
+.spatialAuth * {
+  box-sizing: border-box;
+}
+
+.spatialAuth button,
+.spatialAuth input {
+  font-family: inherit;
+}
+
+/* FLOATING NAVBAR */
+
+.spatialAuthNav {
+  width: 92%;
+  max-width: 1400px;
+  margin: 18px auto 0;
+  padding: 12px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(35px) saturate(150%);
+  -webkit-backdrop-filter: blur(35px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.spatialAuthBrand {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: white;
+  text-decoration: none;
+}
+
+.spatialBack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+
+  padding: 9px 17px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  transition: background 0.3s ease;
+}
+
+.spatialBack svg {
+  font-size: 16px;
+}
+
+.spatialBack:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* MAIN LAYOUT */
+
+.spatialAuthMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+
+/* HERO TEXT */
+
+.spatialAuthIntro {
+  text-align: center;
+  margin-bottom: 24px;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+.spatialAuthIntro > span {
+  font-size: 9px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.spatialAuthIntro h1 {
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.1;
+  margin: 10px 0;
+}
+
+.spatialAuthIntro p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* FLOATING AUTH WORKSPACE */
+
+.spatialAuthWorkspace {
+  width: 100%;
+  max-width: 410px;
+  position: relative;
+}
+
+/* WINDOW TOP BAR */
+
+.spatialAuthBar {
+  width: 80%;
+  margin: 0 auto 10px;
+  padding: 9px 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(70, 60, 45, 0.3);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.spatialAuthBar svg {
+  font-size: 15px;
+}
+
+/* PREMIUM GLASS CARD */
+
+.spatialAuthCard {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 30px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(155, 140, 115, 0.48),
+    rgba(60, 48, 35, 0.55)
+  );
+
+  backdrop-filter: blur(32px) saturate(140%);
+  -webkit-backdrop-filter: blur(32px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 30px;
+
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.25),
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* GLASS REFLECTION */
+
+.spatialAuthCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.14),
+    transparent 35%,
+    transparent 75%,
+    rgba(255, 255, 255, 0.05)
+  );
+
+  pointer-events: none;
+}
+
+/* APP SYMBOL */
+
+.spatialAuthSymbol {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 32px;
+  color: #fff8ed;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.08)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 19px;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* AUTH HEADING */
+
+.spatialAuthHeading {
+  text-align: center;
+  margin-bottom: 23px;
+}
+
+.spatialAuthHeading h2 {
+  margin: 0 0 7px;
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: -1.3px;
+}
+
+.spatialAuthHeading p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ANIMATED GLASS TABS */
+
+.spatialAuthTabs {
+  display: flex;
+  position: relative;
+  padding: 4px;
+  margin-bottom: 20px;
+
+  background: rgba(35, 25, 15, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+}
+
+.spatialAuthTabs button {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  padding: 11px 10px;
+
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.spatialAuthTabs button.active {
+  color: #3e3428;
+}
+
+.spatialTabIndicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+
+  width: calc(50% - 4px);
+  border-radius: 50px;
+
+  background: rgba(255, 250, 240, 0.92);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* AUTH FORM */
+
+.spatialAuthForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spatialNameField {
+  overflow: hidden;
+}
+
+.spatialInput {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 50px;
+  padding: 0 15px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  border-radius: 14px;
+
+  transition: all 0.3s ease;
+}
+
+.spatialInput > svg {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  flex-shrink: 0;
+}
+
+.spatialInput:focus-within {
+  background: rgba(255, 255, 255, 0.17);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.07);
+}
+
+.spatialInput input {
+  width: 100%;
+  min-width: 0;
+  padding: 15px 0;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.spatialInput input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* PASSWORD VISIBILITY */
+
+.spatialPasswordToggle {
+  display: grid;
+  place-items: center;
+  padding: 3px;
+
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.spatialPasswordToggle svg {
+  font-size: 19px;
+}
+
+/* PRIMARY BUTTON */
+
+.spatialAuthSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 49px;
+  padding: 14px 18px;
+  margin-top: 7px;
+
+  background: rgba(255, 250, 240, 0.96);
+  color: #42382d;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.spatialAuthSubmit svg {
+  font-size: 17px;
+  transition: transform 0.3s ease;
+}
+
+.spatialAuthSubmit:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background: white;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.spatialAuthSubmit:hover:not(:disabled) svg {
+  transform: translateX(4px);
+}
+
+.spatialAuthSubmit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* ERROR MESSAGE */
+
+.spatialAuthError {
+  padding: 11px 13px;
+
+  color: #ffe0dc;
+  background: rgba(150, 30, 25, 0.35);
+
+  border: 1px solid rgba(255, 150, 140, 0.3);
+  border-radius: 12px;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* BOTTOM TEXT */
+
+.spatialAuthBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 22px;
+
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.spatialAuthBottom svg {
+  font-size: 12px;
+}
+
+/* VISION OS HOME INDICATOR */
+
+.spatialAuthIndicator {
+  width: 85px;
+  height: 4px;
+  margin: 16px auto 0;
+
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* FOOTER */
+
+.spatialAuthFooter {
+  width: 90%;
+  margin: 0 auto;
+  padding: 15px 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* KEYBOARD ACCESSIBILITY */
+
+.spatialAuth button:focus-visible,
+.spatialAuth a:focus-visible {
+  outline: 2px solid #fff8ed;
+  outline-offset: 4px;
+}
+
+/* COMPACT LAPTOP SCREENS */
+
+@media (max-height: 850px) {
+  .spatialAuthMain {
+    padding: 20px 15px;
+  }
+
+  .spatialAuthIntro {
+    margin-bottom: 18px;
+  }
+
+  .spatialAuthIntro h1 {
+    font-size: clamp(30px, 4vw, 42px);
+  }
+
+  .spatialAuthCard {
+    padding: 23px 28px;
+  }
+
+  .spatialAuthSymbol {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  .spatialAuthHeading {
+    margin-bottom: 18px;
+  }
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 600px) {
+  .spatialAuth {
+    background-attachment: scroll;
+  }
+
+  .spatialAuthNav {
+    padding: 10px 15px;
+  }
+
+  .spatialAuthBrand {
+    font-size: 18px;
+  }
+
+  .spatialBack {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+
+  .spatialAuthMain {
+    padding: 30px 18px;
+  }
+
+  .spatialAuthIntro > span {
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+
+  .spatialAuthIntro h1 {
+    font-size: 33px;
+  }
+
+  .spatialAuthIntro p {
+    font-size: 12px;
+  }
+
+  .spatialAuthCard {
+    padding: 25px 22px;
+    border-radius: 25px;
+  }
+
+  .spatialAuthHeading h2 {
+    font-size: 24px;
+  }
+
+  .spatialInput input {
+    font-size: 16px;
+  }
+
+  .spatialAuthFooter {
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spatialAuth * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* FIX BROWSER AUTOFILL BACKGROUND */
+
+.spatialInput input:-webkit-autofill,
+.spatialInput input:-webkit-autofill:hover,
+.spatialInput input:-webkit-autofill:focus,
+.spatialInput input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  transition: background-color 99999s ease-in-out 0s;
+  caret-color: white;
+}
+
+.spatialInput input {
+  background: transparent !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none;
 }
