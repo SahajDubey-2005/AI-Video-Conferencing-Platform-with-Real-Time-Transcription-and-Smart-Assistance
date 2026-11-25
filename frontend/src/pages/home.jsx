@@ -2,410 +2,215 @@
 import React, { useContext, useState } from "react";
 import withAuth from "../utils/withAuth";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import { motion } from "framer-motion";
-
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  IconButton,
+  Stack,
+  Container,
+  Paper,
+  CssBaseline
+} from "@mui/material";
 import RestoreIcon from "@mui/icons-material/Restore";
-import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
 import LogoutIcon from "@mui/icons-material/Logout";
-import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import EventIcon from "@mui/icons-material/Event";
 import AddIcon from "@mui/icons-material/Add";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import KeyboardOutlinedIcon from "@mui/icons-material/KeyboardOutlined";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
-import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import CallEndIcon from "@mui/icons-material/CallEnd";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { keyframes } from "@mui/system";
+import { AuthContext } from "../contexts/AuthContext";
 
-import "../App.css";
+/* 🔥 Text animation */
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 function HomeComponent() {
   const navigate = useNavigate();
-
   const [meetingCode, setMeetingCode] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
-  const [joining, setJoining] = useState(false);
-  const [error, setError] = useState("");
+  const [darkMode, setDarkMode] = useState(true);
 
   const { addToUserHistory } = useContext(AuthContext);
 
-  // Generate meeting code
+  /* 🔥 Generate meeting code */
   const generateMeetingCode = () => {
     const code = Math.random().toString(36).substring(2, 8);
     setMeetingCode(code);
-    setError("");
   };
 
-  // Join meeting
-  const handleJoinVideoCall = async (e) => {
-    e?.preventDefault();
+  const handleJoinVideoCall = async () => {
+    if (!meetingCode) return;
+    await addToUserHistory(meetingCode);
+  navigate(`/meet/${meetingCode}`);
+  };
 
-    const code = meetingCode.trim();
-
-    if (!code || joining) return;
-
-    setJoining(true);
-    setError("");
-
-    try {
-      await addToUserHistory(code);
-      navigate(`/meet/${encodeURIComponent(code)}`);
-    } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-        "Unable to join meeting. Please try again."
-      );
-    } finally {
-      setJoining(false);
+  /* 🎨 Theme */
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: "#1a73e8"
+      },
+      background: {
+        default: darkMode ? "#0f172a" : "#f5f7fb",
+        paper: darkMode ? "#020617" : "#ffffff"
+      }
     }
-  };
-
-  // Logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/auth");
-  };
-
-  // Dynamic greeting
-  const hour = new Date().getHours();
-
-  const greeting =
-    hour < 12
-      ? "Good morning"
-      : hour < 17
-      ? "Good afternoon"
-      : "Good evening";
+  });
 
   return (
-    <div
-      className={`spatialHome ${
-        darkMode ? "spatialNight" : ""
-      }`}
-    >
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-      {/* ================= NAVBAR ================= */}
+      {/* ===== NAVBAR ===== */}
+      <AppBar position="static" color="transparent" elevation={0}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <VideoCallIcon color="primary" fontSize="large" />
+            <Typography variant="h6" fontWeight="bold">
+              Apna Video Call
+            </Typography>
+          </Stack>
 
-      <nav className="spatialHomeNav">
+          <Stack direction="row" spacing={1} alignItems="center">
+            <IconButton onClick={() => setDarkMode(!darkMode)}>
+              {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
 
-        <div className="spatialHomeBrand">
-          ◈ ApnaMeet
-        </div>
+            <IconButton onClick={() => navigate("/history")}>
+              <RestoreIcon />
+            </IconButton>
 
-        <div className="spatialHomeNavLinks">
+            <Button onClick={() => navigate("/calendar")}>Calendar</Button>
+            <Button onClick={() => navigate("/workspaces")}>Workspaces</Button>
 
-          {/* Theme toggle */}
+            <Button
+              startIcon={<LogoutIcon />}
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/auth");
+              }}
+            >
+              Logout
+            </Button>
+          </Stack>
+        </Toolbar>
+      </AppBar>
 
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            title="Change appearance"
-            aria-label="Change appearance"
-          >
-            {darkMode ? (
-              <LightModeOutlinedIcon />
-            ) : (
-              <DarkModeOutlinedIcon />
-            )}
-          </button>
-
-          {/* Meeting history */}
-
-          <button
-            onClick={() => navigate("/history")}
-            title="Meeting history"
-            aria-label="Meeting history"
-          >
-            <RestoreIcon />
-          </button>
-
-          {/* Calendar */}
-
-          <button
-            onClick={() => navigate("/calendar")}
-            aria-label="Calendar"
-          >
-            <EventOutlinedIcon />
-            <span>Calendar</span>
-          </button>
-
-          {/* Workspaces */}
-
-          <button
-            onClick={() => navigate("/workspaces")}
-            aria-label="Workspaces"
-          >
-            <LayersOutlinedIcon />
-            <span>Workspaces</span>
-          </button>
-
-          {/* Logout */}
-
-          <button
-            className="spatialLogout"
-            onClick={handleLogout}
-            aria-label="Logout"
-          >
-            <LogoutIcon />
-            <span>Logout</span>
-          </button>
-
-        </div>
-
-      </nav>
-
-      {/* ================= MAIN SECTION ================= */}
-
-      <main className="spatialHomeMain">
-
-        {/* ================= LEFT SECTION ================= */}
-
-        <motion.section
-          className="spatialHomeLeft"
-          initial={{ opacity: 0, x: -25 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+      {/* ===== MAIN SECTION ===== */}
+      <Container maxWidth="lg" sx={{ mt: 10 }}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={8}
+          alignItems="center"
+          justifyContent="space-between"
         >
+          {/* LEFT */}
+          <Box flex={1}>
+            <Typography
+              variant="h3"
+              fontWeight="bold"
+              sx={{
+                animation: `${fadeUp} 0.8s ease`
+              }}
+            >
+              Meet smarter.  
+              <br />
+              Connect faster.
+            </Typography>
 
-          <div className="spatialHomeEyebrow">
-            <span className="spatialOnlineDot" />
-            YOUR PERSONAL WORKSPACE
-          </div>
+            <Typography
+              sx={{
+                mt: 2,
+                mb: 4,
+                fontSize: "1.1rem",
+                color: "text.secondary",
+                animation: `${fadeUp} 1.1s ease`
+              }}
+            >
+              Crystal-clear video meetings.  
+              Secure. Simple. Built for the modern world.
+            </Typography>
 
-          <h1>
-            {greeting}.
-            <br />
-            <span>Let's connect.</span>
-          </h1>
-
-          <p className="spatialHomeDescription">
-            Meaningful conversations, wherever you are.
-            <br />
-            Your next meeting is just a moment away.
-          </p>
-
-          {/* ================= MEETING CARD ================= */}
-
-          <div className="spatialMeetingCard">
-
-            <div className="spatialMeetingTitle">
-
-              <div className="spatialMeetingIcon">
-                <VideoCallOutlinedIcon />
-              </div>
-
-              <div>
-                <h3>Start a conversation</h3>
-                <p>Join or create your meeting space.</p>
-              </div>
-
-            </div>
-
-            <form onSubmit={handleJoinVideoCall}>
-
-              {/* Meeting code input */}
-
-              <div className="spatialMeetingInput">
-
-                <KeyboardOutlinedIcon />
-
-                <input
-                  type="text"
-                  placeholder="Enter meeting code"
-                  aria-label="Meeting code"
+            <Paper
+              elevation={6}
+              sx={{
+                p: 3,
+                maxWidth: 440,
+                borderRadius: 3,
+                animation: `${fadeUp} 1.4s ease`
+              }}
+            >
+              <Stack spacing={2}>
+                <TextField
+                  label="Meeting Code"
+                  fullWidth
                   value={meetingCode}
-                  onChange={(e) => {
-                    setMeetingCode(e.target.value);
-                    setError("");
-                  }}
-                  autoComplete="off"
+                  onChange={(e) => setMeetingCode(e.target.value)}
                 />
 
-              </div>
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={handleJoinVideoCall}
+                    sx={{ py: 1.2 }}
+                  >
+                    Join Meeting
+                  </Button>
 
-              {/* Error message */}
+                  <Button
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={generateMeetingCode}
+                    fullWidth
+                  >
+                    New Meeting
+                  </Button>
+                </Stack>
 
-              {error && (
-                <p
-                  className="spatialHomeError"
-                  role="alert"
+                <Typography
+                  variant="caption"
+                  align="center"
+                  color="text.secondary"
                 >
-                  {error}
-                </p>
-              )}
+                  End-to-end encrypted • WebRTC powered
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
 
-              {/* Meeting actions */}
-
-              <div className="spatialMeetingActions">
-
-                <button
-                  className="spatialJoinButton"
-                  type="submit"
-                  disabled={!meetingCode.trim() || joining}
-                >
-                  {joining ? "Joining..." : "Join meeting"}
-                  <ArrowForwardIcon />
-                </button>
-
-                <button
-                  className="spatialNewButton"
-                  type="button"
-                  onClick={generateMeetingCode}
-                  disabled={joining}
-                >
-                  <AddIcon />
-                  New meeting
-                </button>
-
-              </div>
-
-            </form>
-
-            <div className="spatialMeetingNote">
-              <LockOutlinedIcon />
-              <span>
-                Private meeting spaces · WebRTC powered
-              </span>
-            </div>
-
-          </div>
-
-        </motion.section>
-
-        {/* ================= RIGHT SECTION ================= */}
-
-        <motion.section
-          className="spatialHomeRight"
-          initial={{
-            opacity: 0,
-            y: 30,
-            scale: 0.96
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1
-          }}
-          transition={{
-            duration: 1,
-            delay: 0.2
-          }}
-        >
-
-          {/* Floating browser bar */}
-
-          <div className="spatialPreviewBar">
-
-            <span>◈</span>
-
-            <div>
-              ApnaMeet · Meeting Space
-            </div>
-
-            <MoreHorizIcon />
-
-          </div>
-
-          {/* Glass meeting window */}
-
-          <div className="spatialPreviewWindow">
-
-            <div className="spatialPreviewHeader">
-
-              <div>
-                <span className="spatialPreviewDot" />
-                Your meeting space
-              </div>
-
-              <span>Standby mode</span>
-
-            </div>
-
-            {/* ================= EMPTY MEETING LOBBY ================= */}
-
-            <div className="spatialEmptyPreview">
-
-              <div className="spatialPreviewGlow" />
-
-              {/* Animated camera icon */}
-
-              <div className="spatialCameraOrb">
-                <VideocamOutlinedIcon />
-              </div>
-
-              <h2>Ready to connect.</h2>
-
-              <p>Your meeting space awaits.</p>
-
-              <div className="spatialStandby">
-                <span />
-                Waiting to join a meeting
-              </div>
-
-            </div>
-
-            <div className="spatialPreviewCaption">
-              Distance disappears when we connect.
-            </div>
-
-          </div>
-
-          {/* ================= FLOATING CONTROL DOCK ================= */}
-
-          <div
-            className="spatialPreviewDock"
-            aria-hidden="true"
+          {/* RIGHT */}
+          <Box
+            flex={1}
+            display="flex"
+            justifyContent="center"
+            sx={{
+              animation: `${fadeUp} 1.6s ease`
+            }}
           >
-
-            <span>
-              <MicNoneOutlinedIcon />
-            </span>
-
-            <span>
-              <VideocamOutlinedIcon />
-            </span>
-
-            <span>
-              <ScreenShareOutlinedIcon />
-            </span>
-
-            <span>
-              <ChatBubbleOutlineIcon />
-            </span>
-
-            <span>
-              <MoreHorizIcon />
-            </span>
-
-            <span className="spatialPreviewEnd">
-              <CallEndIcon />
-            </span>
-
-          </div>
-
-          {/* Spatial home indicator */}
-
-          <div className="spatialHomeIndicator" />
-
-        </motion.section>
-
-      </main>
-
-      {/* ================= FOOTER ================= */}
-
-      <footer className="spatialHomeFooter">
-
-        <span>ApnaMeet © 2026</span>
-
-        <span>Designed for human connection.</span>
-
-      </footer>
-
-    </div>
+            <img
+              src="/logo3.png"
+              alt="Video Call"
+              style={{ maxWidth: "100%" }}
+            />
+          </Box>
+        </Stack>
+      </Container>
+    </ThemeProvider>
   );
 }
 
