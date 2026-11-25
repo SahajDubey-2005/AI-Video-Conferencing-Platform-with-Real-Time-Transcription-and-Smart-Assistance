@@ -1,24 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState, useContext } from "react";
-import {
-  Avatar,
-  Button,
-  TextField,
-  Paper,
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-  Snackbar,
-  CircularProgress
-} from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Snackbar, CircularProgress } from "@mui/material";
 import { AuthContext } from "../contexts/AuthContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+import "../App.css";
 
 const Authentication = () => {
   const { handleLogin, handleRegister } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [tab, setTab] = useState(0);
   const [username, setUsername] = useState("");
@@ -28,16 +24,22 @@ const Authentication = () => {
   const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleAuth = async () => {
+  const handleAuth = async (e) => {
+    e.preventDefault();
+
+    if (loading) return;
+
     setError("");
     setLoading(true);
+
     try {
-    if (tab === 0) {
-    await handleLogin(username, password);
-    navigate("/home");
-    } else {
+      if (tab === 0) {
+        await handleLogin(username, password);
+      } else {
         const res = await handleRegister(name, username, password);
+
         setMessage(res);
         setOpen(true);
         setTab(0);
@@ -46,11 +48,16 @@ const Authentication = () => {
         setPassword("");
       }
     } catch (err) {
-      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
-      
-      // Network/CORS errors ko better handle karo
-      if (err?.code === "ERR_NETWORK" || err?.message?.includes("Network Error")) {
-        setError("Backend server is not running. Please start the backend server.");
+      const errorMessage =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Something went wrong";
+
+      if (
+        err?.code === "ERR_NETWORK" ||
+        err?.message?.includes("Network Error")
+      ) {
+        setError("Unable to connect to the backend server.");
       } else {
         setError(errorMessage);
       }
@@ -59,133 +66,243 @@ const Authentication = () => {
     }
   };
 
+  const changeTab = (value) => {
+    setTab(value);
+    setError("");
+    setShowPassword(false);
+  };
+
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background:
-          "radial-gradient(circle at top, #1e1e2f, #0a0a0a)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        px: 2
-      }}
-    >
-      <Paper
-        elevation={12}
-        sx={{
-          width: 400,
-          p: 4,
-          borderRadius: 4,
-          background: "rgba(30,30,45,0.95)",
-          color: "white"
-        }}
-      >
-        {/* Animated Heading */}
+    <div className="spatialAuth">
+
+      {/* Floating Navbar */}
+      <nav className="spatialAuthNav">
+        <Link to="/" className="spatialAuthBrand">
+          ◈ ApnaMeet
+        </Link>
+
+        <Link to="/" className="spatialBack">
+          <ArrowBackIcon />
+          Back to home
+        </Link>
+      </nav>
+
+      <main className="spatialAuthMain">
+
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          className="spatialAuthIntro"
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8 }}
         >
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Avatar sx={{ bgcolor: "#1a73e8", mb: 1 }}>
-              <LockOutlinedIcon />
-            </Avatar>
+          <span>YOUR PERSONAL MEETING SPACE</span>
 
-            <Typography variant="h5" fontWeight={700}>
-              {tab === 0 ? "Welcome Back 👋" : "Create Your Account 🚀"}
-            </Typography>
+          <h1>Connection starts here.</h1>
 
-            <Typography
-              variant="body2"
-              sx={{ opacity: 0.7, mt: 1, textAlign: "center" }}
-            >
-              Secure video meetings inspired by Google Meet & Zoom
-            </Typography>
-          </Box>
+          <p>A little closer, wherever you are.</p>
         </motion.div>
 
-        {/* Tabs */}
-        <Tabs
-          value={tab}
-          onChange={(e, v) => setTab(v)}
-          centered
-          sx={{
-            mt: 3,
-            "& .MuiTab-root": { color: "#aaa" },
-            "& .Mui-selected": { color: "#1a73e8" }
-          }}
+        <motion.div
+          className="spatialAuthWorkspace"
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
         >
-          <Tab label="Sign In" />
-          <Tab label="Sign Up" />
-        </Tabs>
 
-        {/* Form */}
-        <Box mt={3}>
-          {tab === 1 && (
-            <TextField
-              fullWidth
-              label="Full Name"
-              margin="normal"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              InputLabelProps={{ style: { color: "#aaa" } }}
-              InputProps={{ style: { color: "white" } }}
-            />
-          )}
+          {/* Floating Window Bar */}
+          <div className="spatialAuthBar">
+            <LockOutlinedIcon />
+            <span>ApnaMeet · Account</span>
+            <span>◈</span>
+          </div>
 
-          <TextField
-            fullWidth
-            label="Username"
-            margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            InputLabelProps={{ style: { color: "#aaa" } }}
-            InputProps={{ style: { color: "white" } }}
-          />
+          {/* Glass Authentication Window */}
+          <div className="spatialAuthCard">
 
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            InputLabelProps={{ style: { color: "#aaa" } }}
-            InputProps={{ style: { color: "white" } }}
-          />
+            <div className="spatialAuthSymbol">
+              ◈
+            </div>
 
-          {error && (
-            <Typography color="error" fontSize={14} mt={1}>
-              {error}
-            </Typography>
-          )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tab}
+                className="spatialAuthHeading"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h2>
+                  {tab === 0
+                    ? "Welcome back."
+                    : "Make yourself at home."}
+                </h2>
 
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={handleAuth}
-            disabled={loading}
-            sx={{
-              mt: 3,
-              py: 1.3,
-              bgcolor: "#1a73e8",
-              fontWeight: "bold",
-              borderRadius: 3,
-              textTransform: "none",
-              ":hover": { bgcolor: "#1558c0" }
-            }}
-          >
-            {loading ? (
-              <CircularProgress size={22} sx={{ color: "white" }} />
-            ) : tab === 0 ? (
-              "Sign In"
-            ) : (
-              "Create Account"
-            )}
-          </Button>
-        </Box>
-      </Paper>
+                <p>
+                  {tab === 0
+                    ? "Your space awaits."
+                    : "Create your personal meeting space."}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Glass Tabs */}
+            <div className="spatialAuthTabs">
+
+              <motion.div
+                className="spatialTabIndicator"
+                animate={{ x: tab === 0 ? "0%" : "100%" }}
+                transition={{
+                  type: "spring",
+                  stiffness: 350,
+                  damping: 30
+                }}
+              />
+
+              <button
+                type="button"
+                className={tab === 0 ? "active" : ""}
+                onClick={() => changeTab(0)}
+                disabled={loading}
+              >
+                Sign in
+              </button>
+
+              <button
+                type="button"
+                className={tab === 1 ? "active" : ""}
+                onClick={() => changeTab(1)}
+                disabled={loading}
+              >
+                Register
+              </button>
+
+            </div>
+
+            <form
+              className="spatialAuthForm"
+              onSubmit={handleAuth}
+            >
+
+              <AnimatePresence initial={false}>
+                {tab === 1 && (
+                  <motion.div
+                    className="spatialNameField"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                  >
+                    <div className="spatialInput">
+                      <PersonOutlineIcon />
+
+                      <input
+                        type="text"
+                        placeholder="Full name"
+                        aria-label="Full name"
+                        autoComplete="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div className="spatialInput">
+                <PersonOutlineIcon />
+
+                <input
+                  type="text"
+                  placeholder="Username"
+                  aria-label="Username"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="spatialInput">
+                <LockOutlinedIcon />
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  aria-label="Password"
+                  autoComplete={
+                    tab === 0
+                      ? "current-password"
+                      : "new-password"
+                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="spatialPasswordToggle"
+                  aria-label={
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
+                  }
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword
+                    ? <VisibilityOffOutlinedIcon />
+                    : <VisibilityOutlinedIcon />}
+                </button>
+              </div>
+
+              {error && (
+                <div className="spatialAuthError" role="alert">
+                  {error}
+                </div>
+              )}
+
+              <button
+                className="spatialAuthSubmit"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <CircularProgress
+                    size={22}
+                    sx={{ color: "#42382d" }}
+                  />
+                ) : (
+                  <>
+                    {tab === 0
+                      ? "Enter your space"
+                      : "Create your account"}
+
+                    <ArrowForwardIcon />
+                  </>
+                )}
+              </button>
+
+            </form>
+
+            <div className="spatialAuthBottom">
+              <LockOutlinedIcon />
+              <span>Welcome to your personal meeting space.</span>
+            </div>
+
+          </div>
+
+          {/* Vision OS Home Indicator */}
+          <div className="spatialAuthIndicator" />
+
+        </motion.div>
+
+      </main>
+
+      <footer className="spatialAuthFooter">
+        <span>ApnaMeet © 2026</span>
+        <span>Designed for human connection.</span>
+      </footer>
 
       <Snackbar
         open={open}
@@ -193,7 +310,8 @@ const Authentication = () => {
         message={message}
         onClose={() => setOpen(false)}
       />
-    </Box>
+
+    </div>
   );
 };
 
